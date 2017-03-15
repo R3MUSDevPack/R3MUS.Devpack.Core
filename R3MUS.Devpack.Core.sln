@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R3MUS.Devpack.Core", "R3MUS.Devpack.Core\R3MUS.Devpack.Core.csproj", "{9E3EA63D-F74F-46B4-BB07-55B6423F7A5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R3MUS.Devpack.Core.Tests", "R3MUS.Devpack.Core.Tests\R3MUS.Devpack.Core.Tests.csproj", "{35EEC69D-2AED-4DFF-A974-2C21E7624660}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E3EA63D-F74F-46B4-BB07-55B6423F7A5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E3EA63D-F74F-46B4-BB07-55B6423F7A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E3EA63D-F74F-46B4-BB07-55B6423F7A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E3EA63D-F74F-46B4-BB07-55B6423F7A5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35EEC69D-2AED-4DFF-A974-2C21E7624660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35EEC69D-2AED-4DFF-A974-2C21E7624660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35EEC69D-2AED-4DFF-A974-2C21E7624660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35EEC69D-2AED-4DFF-A974-2C21E7624660}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
