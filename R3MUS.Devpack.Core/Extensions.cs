@@ -19,7 +19,7 @@ namespace R3MUS.Devpack.Core
                 var srcType = src.GetType();
                 var destType = dest.GetType();
 
-                var properties = srcType.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public).ToList<PropertyInfo>();
+                var properties = srcType.GetProperties(BindingFlags.Instance | BindingFlags.Public).ToList<PropertyInfo>();
 
                 properties.ForEach(srcProp => {
                     var destProp = destType.GetProperty(srcProp.Name);

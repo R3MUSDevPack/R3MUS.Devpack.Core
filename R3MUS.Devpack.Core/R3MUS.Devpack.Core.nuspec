@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>R3MUS.Devpack.Core</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>R3MUS.Devpack</authors>
+    <owners>R3MUS.Devpack</owners>
+    <projectUrl>https://github.com/R3MUSDevPack/R3MUS.Devpack.Core</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Basic shared functionality for R3MUS Devpack .NET projects</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Core Web</tags>
+  </metadata>
+</package>
