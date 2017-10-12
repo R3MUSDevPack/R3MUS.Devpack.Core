@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\Method.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="HttpAbstraction\HttpWebRequest.cs" />
     <Compile Include="HttpAbstraction\HttpWebRequestFactory.cs" />

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace R3MUS.Devpack.Core.HttpAbstraction
 {
@@ -16,7 +14,31 @@ namespace R3MUS.Devpack.Core.HttpAbstraction
         public HttpWebRequest(System.Net.HttpWebRequest request)
         {
             _request = request;
-            _request.UserAgent = Assembly.GetExecutingAssembly().FullName;
+            //_request.UserAgent = Assembly.GetExecutingAssembly().FullName;
+            //_request.Accept = "application/json";
+        }
+
+        public string Host
+        {
+            get { return _request.Host; }
+            set { _request.Host = value; }
+        }
+
+        public long ContentLength
+        {
+            get { return _request.ContentLength; }
+            set { _request.ContentLength = value; }
+        }
+
+        public WebHeaderCollection Headers
+        {
+            get { return _request.Headers; }
+        }
+
+        public string ContentHeaders
+        {
+            get { return _request.ContentType; }
+            set { _request.ContentType = value; }
         }
 
         public string Method
@@ -25,15 +47,45 @@ namespace R3MUS.Devpack.Core.HttpAbstraction
             set { _request.Method = value; }
         }
 
+        public Stream GetRequestStream()
+        {
+            return _request.GetRequestStream();
+        }
+								
         public IHttpWebResponse GetResponse()
         {
             return new HttpWebResponse((System.Net.HttpWebResponse)_request.GetResponse());
+        }
+		public IHttpWebResponse GetResponse(byte[] bytes)
+        {
+            var reqStream = _request.GetRequestStream();
+            reqStream.Write(bytes, 0, bytes.Length);
+            reqStream.Close();
+
+            return new HttpWebResponse((System.Net.HttpWebResponse)_request.GetResponse());
+        }
+        public void AddHeader(KeyValuePair<string, string> header)
+        {
+            if (header.Key == "Content-Type")
+            {
+                _request.ContentType = header.Value;
+            }
+            else if(header.Key == "Accept")
+            {
+                _request.Accept = header.Value;
+            }
+            else
+            {
+                _request.Headers[header.Key] = header.Value;
+            }
         }
     }
 
     public class HttpWebResponse : IHttpWebResponse
     {
-        private WebResponse _response;
+        private System.Net.HttpWebResponse _response;
+
+        public HttpStatusCode StatusCode { get { return _response.StatusCode; } }
 
         public HttpWebResponse(System.Net.HttpWebResponse response)
         {
