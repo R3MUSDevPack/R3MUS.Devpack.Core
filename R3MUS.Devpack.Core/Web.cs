@@ -11,9 +11,14 @@ namespace R3MUS.Devpack.Core
 {
     public class Web
     {
-        public static string BaseRequest(string uri)
+        public static string BaseRequest(string uri, Dictionary<string, string> headers = null)
         {
             var request = new HttpWebRequestFactory().Create(uri);
+
+            foreach (var header in headers)
+            {
+                request.AddHeader(header);
+            }
 
             var responseStream = request.GetResponse().GetResponseStream();
             using (var reader = new StreamReader(responseStream))
