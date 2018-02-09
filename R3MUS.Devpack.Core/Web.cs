@@ -11,9 +11,22 @@ namespace R3MUS.Devpack.Core
 {
     public class Web
     {
-        public static string BaseRequest(string uri)
+        public static string BaseRequest(string uri, List<KeyValuePair<string, string>> headers = null)
         {
             var request = new HttpWebRequestFactory().Create(uri);
+            if (headers != null)
+            {
+                headers.ForEach(h => {
+                    if (h.Key.ToLower().Equals("authorization"))
+                    {
+                        request.Headers[System.Net.HttpRequestHeader.Authorization] = h.Value;
+                    }
+                    else
+                    {
+                        request.Headers.Add(h.Key, h.Value);
+                    }
+                });
+            }
 
             var responseStream = request.GetResponse().GetResponseStream();
             using (var reader = new StreamReader(responseStream))

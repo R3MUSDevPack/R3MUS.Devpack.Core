@@ -7,9 +7,9 @@ namespace R3MUS.Devpack.Core
 {
     public static class Extensions
     {
-        public static object Deserialize(this string me, Type t)
+        public static T Deserialize<T>(this string me)
         {
-            return JsonConvert.DeserializeObject(me, t);
+            return (T)JsonConvert.DeserializeObject(me, typeof(T));
         }
 
         public static void SetProperties(this object dest, object src)
