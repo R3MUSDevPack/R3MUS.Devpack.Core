@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using R3MUS.Devpack.Core.Attributes;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -22,8 +23,11 @@ namespace R3MUS.Devpack.Core
                 var properties = srcType.GetProperties(BindingFlags.Instance | BindingFlags.Public).ToList<PropertyInfo>();
 
                 properties.ForEach(srcProp => {
-                    var destProp = destType.GetProperty(srcProp.Name);
-                    destProp.SetValue(dest, srcProp.GetValue(src));
+                    if (srcProp.GetCustomAttribute<IgnoreDataMemberAttribute>() == null)
+                    {
+                        var destProp = destType.GetProperty(srcProp.Name);
+                        destProp.SetValue(dest, srcProp.GetValue(src));
+                    }
                 });
             }
             else
