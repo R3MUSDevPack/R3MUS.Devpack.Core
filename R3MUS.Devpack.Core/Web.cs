@@ -3,28 +3,24 @@ using R3MUS.Devpack.Core.Enums;
 using R3MUS.Devpack.Core.HttpAbstraction;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Web;
 
 namespace R3MUS.Devpack.Core
 {
     public class Web
     {
-        public static string BaseRequest(string uri, List<KeyValuePair<string, string>> headers = null)
+        protected static string BaseRequest(string uri, List<KeyValuePair<string, string>> headers = null)
         {
             var request = new HttpWebRequestFactory().Create(uri);
             if (headers != null)
             {
                 headers.ForEach(h => {
-                    if (h.Key.ToLower().Equals("authorization"))
-                    {
-                        request.Headers[System.Net.HttpRequestHeader.Authorization] = h.Value;
-                    }
-                    else
-                    {
-                        request.Headers.Add(h.Key, h.Value);
-                    }
+                    request.AddHeader(h);
                 });
             }
 
@@ -35,7 +31,25 @@ namespace R3MUS.Devpack.Core
             }
         }
 
-        public static T Post<T>(string uri, Dictionary<string, string> headers, object postData)
+        public static OutT Get<InT, OutT>(string uri, Dictionary<string, string> headers, InT postData)
+        {
+            string dataStr;
+
+            if (!postData.GetType().IsSimple())
+            {
+                dataStr = Serialise(postData);
+            }
+            else
+            {
+                dataStr = postData.ToString();
+            }
+
+            var reqUrl = string.Concat(uri, dataStr);
+            var resultStr = BaseRequest(reqUrl, headers.ToList());
+            return JsonConvert.DeserializeObject<OutT>(resultStr);
+        }
+
+        public static OutT Post<InT, OutT>(string uri, Dictionary<string, string> headers, InT postData)
         {
             string dataStr;
 
@@ -45,7 +59,7 @@ namespace R3MUS.Devpack.Core
             }
             else
             {
-                dataStr = (string)postData;
+                dataStr = postData.ToString();
             }
 
             var data = Encoding.ASCII.GetBytes(dataStr);
@@ -82,7 +96,14 @@ namespace R3MUS.Devpack.Core
                 result = reader.ReadToEnd();
             }
             
-            return JsonConvert.DeserializeObject<T>(result);
+            return JsonConvert.DeserializeObject<OutT>(result);
+        }
+
+        private static string Serialise(object toSerialise)
+        {
+            return toSerialise
+                .ToNameValueCollection()
+                .ToQueryString();
         }
     }
 }

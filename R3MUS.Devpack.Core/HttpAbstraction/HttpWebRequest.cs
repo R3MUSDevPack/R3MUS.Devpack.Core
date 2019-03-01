@@ -66,13 +66,17 @@ namespace R3MUS.Devpack.Core.HttpAbstraction
         }
         public void AddHeader(KeyValuePair<string, string> header)
         {
-            if (header.Key == "Content-Type")
+            if (header.Key.ToLower().Equals("content-type"))
             {
                 _request.ContentType = header.Value;
             }
-            else if(header.Key == "Accept")
+            else if(header.Key.ToLower().Equals("accept"))
             {
                 _request.Accept = header.Value;
+            }
+            else if (header.Key.ToLower().Equals("authorization"))
+            {
+                _request.Headers[HttpRequestHeader.Authorization] = header.Value;
             }
             else
             {
